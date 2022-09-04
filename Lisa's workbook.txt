@@ -1,0 +1,55 @@
+QUESTION: Lisa's Workbook
+
+Lisa just got a new math workbook. A workbook contains exercise problems, grouped into chapters. 
+Lisa believes a problem to be special if its index (within a chapter) is the same as the page number where it's located. 
+The format of Lisa's book is as follows:
+
+There are n chapters in Lisa's workbook, numbered from 1 to n.
+The  chapter has k problems, numbered from 1 to k.
+Each page can hold up to k problems. Only a chapter's last page of exercises may contain fewer than k problems.
+Each new chapter starts on a new page, so a page will never contain problems from more than one chapter.
+The page number indexing starts at 1 .
+Given the details for Lisa's workbook, can you count its number of special problems?
+
+
+
+
+workbook has the following parameter(s):
+
+int n: the number of chapters
+int k: the maximum number of problems per page
+int arr[n]: the number of problems in each chapter
+Returns
+- int: the number of special problems in the workbook
+
+SOLUTION:
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main() {
+    int n, k; scanf("%i %i", &n, &k);
+    int *ar = malloc(sizeof(int)*n);
+    for (int i=0; i<n; i++) scanf("%i", &ar[i]);
+    
+    int curChapter = 1, curPage = 1, count = 0;
+    while (curChapter <= n) {
+        
+        for (int i=1; i<=ar[curChapter-1]; i++) {
+            if (i == curPage)
+                count++;
+            
+            if (i+1 <= ar[curChapter-1] && i % k == 0)
+                curPage++;
+        }
+        
+        curPage++;
+        curChapter++;
+    }
+    
+    printf("%i", count);
+    return 0;
+}
+
